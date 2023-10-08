@@ -1,0 +1,57 @@
+<div class="notice">
+  <div class="notice-info">
+    <button class="notice-btn" (click)="onTabChange('info')">Info</button>
+    <button class="notice-btn" (click)="onTabChange('service')">Service</button>
+    <button class="notice-btn" (click)="onTabChange('privacy')">Privacy</button
+    ><button class="notice-btn" (click)="onTabChange('user')">
+      User Agreement
+    </button>
+  </div>
+
+  <div class="notice-body" [ngSwitch]="tab">
+    <!-- Default Service and Agreement page -->
+    <div *ngSwitchDefault>
+      <h1>Terms of service and Privacy Policy</h1>
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum quae porro
+        beatae minima deleniti sapiente magni assumenda distinctio rem
+        recusandae debitis veritatis odio at aliquid pariatur sequi minus, fugit
+        quasi consequuntur repudiandae voluptates? Mollitia error eum asperiores
+        architecto delectus eligendi aspernatur voluptatem deserunt omnis? Quas
+        dolore nemo hic blanditiis earum?
+      </p>
+    </div>
+
+    <!-- Terms of service page -->
+    <div *ngSwitchCase="'service'">
+      <h2>Terms of service</h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam impedit
+        odit deleniti sunt modi doloremque fugit ipsum illum vero voluptates
+        fuga laborum, ab vitae atque nostrum corporis labore magnam et.
+      </p>
+    </div>
+
+    <!-- Privacy policy page -->
+    <div *ngSwitchCase="'privacy'">
+      <h2>Privacy policy</h2>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
+        repellat magni delectus debitis eveniet reprehenderit ratione omnis!
+        Aliquid, vitae! Illum, quod ipsum, quam obcaecati rerum optio autem
+        consequuntur exercitationem incidunt omnis dolorum quaerat rem quos
+        consectetur sapiente corrupti modi temporibus.
+      </p>
+    </div>
+
+    <!-- User agreement page -->
+    <div *ngSwitchCase="'user'">
+      <h2>User agreement</h2>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure,
+        recusandae dolores! Officiis laboriosam est consectetur temporibus iste
+        quasi quas labore.
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="notice">
+  <div class="notice-info">
+    <p>Read terms and privacy policy.</p>
+    <button class="notice-btn" (click)="toggleDisplay()">
+      <i class="fa fa-plus fa-xl" aria-hidden="true"></i>
+    </button>
+  </div>
+  <!--
+    ngIf implementation - angular creates a similar template
+    behind the scenes when it sees an asterisk in front of ngIf or
+    ngFor
+  -->
+  <div class="notice-body" *myNgIf="display">
+    <!-- <ng-template [ngIf]="display" [ngIfElse]="altNoticeText"> -->
+    <h1>Terms of service and Privacy Policy</h1>
+    <p>
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum quae porro
+      beatae minima deleniti sapiente magni assumenda distinctio rem recusandae
+      debitis veritatis odio at aliquid pariatur sequi minus, fugit quasi
+      consequuntur repudiandae voluptates? Mollitia error eum asperiores
+      architecto delectus eligendi aspernatur voluptatem deserunt omnis? Quas
+      dolore nemo hic blanditiis earum?
+    </p>
+    <h2>Terms of service</h2>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam impedit
+      odit deleniti sunt modi doloremque fugit ipsum illum vero voluptates fuga
+      laborum, ab vitae atque nostrum corporis labore magnam et.
+    </p>
+    <h2>Privacy policy</h2>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
+      repellat magni delectus debitis eveniet reprehenderit ratione omnis!
+      Aliquid, vitae! Illum, quod ipsum, quam obcaecati rerum optio autem
+      consequuntur exercitationem incidunt omnis dolorum quaerat rem quos
+      consectetur sapiente corrupti modi temporibus.
+    </p>
+    <!-- </ng-template> -->
+  </div>
+  <ng-template #altNoticeText>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur ad
+      totam veritatis quia vel, repellat nulla incidunt quas maxime sit.
+    </p>
+  </ng-template>
+</div>
