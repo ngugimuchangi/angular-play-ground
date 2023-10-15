@@ -4,9 +4,9 @@ import { HomeComponent } from './home/home.component';
 import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'users', component: UsersComponent },
+  { path: '', component: HomeComponent, title: 'Home' },
+  { path: 'home', component: HomeComponent, title: 'Home' },
+  { path: 'users', component: UsersComponent, title: 'Users' },
 ];
 
 @NgModule({
