@@ -53,12 +53,17 @@ export class UsersComponent implements OnInit, OnDestroy {
       this.componentFactoryResolver.resolveComponentFactory(
         ConfirmDeleteComponent
       );
+
     const containerViewRef: ViewContainerRef = this.container.viewContainer;
+
     containerViewRef.clear();
+
     const confirmDeleteComponentRef = containerViewRef.createComponent(
       confirmDeleteComponentFactory
     );
+
     confirmDeleteComponentRef.instance.userToDelete = user;
+
     this.userDeletionConfirmationSubscription =
       confirmDeleteComponentRef.instance.userDeletionConfirmation.subscribe(
         (confirmationStatus) => {
