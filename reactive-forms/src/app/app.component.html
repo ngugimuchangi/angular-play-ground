@@ -1,0 +1,261 @@
+<section class="container" [ngClass]="formStatus">
+  <header>Registration Form</header>
+
+  <form class="form" [formGroup]="reactiveForm" (ngSubmit)="onFormSubmitted()">
+    <div class="column">
+      <div class="input-box">
+        <input
+          type="text"
+          placeholder="First Name"
+          formControlName="firstName"
+        />
+        <small
+          *ngIf="
+            reactiveForm.get('firstName')?.invalid &&
+            reactiveForm.get('firstName')?.dirty
+          "
+        >
+          {{
+            reactiveForm.get("firstName").getError("required")
+              ? "First name is required"
+              : "First name should contain only alphabets"
+          }}
+        </small>
+      </div>
+      <div class="input-box">
+        <input type="text" placeholder="Last Name" formControlName="lastName" />
+        <small
+          *ngIf="
+            reactiveForm.get('lastName')?.invalid &&
+            reactiveForm.get('lastName')?.dirty
+          "
+        >
+          {{
+            reactiveForm.get("lastName").getError("required")
+              ? "Last name is required"
+              : "Last name should contain only alphabets"
+          }}
+        </small>
+      </div>
+    </div>
+
+    <div class="input-box">
+      <input type="text" placeholder="Email" formControlName="email" />
+      <small
+        *ngIf="
+          reactiveForm.get('email')?.invalid && reactiveForm.get('email')?.dirty
+        "
+      >
+        Enter a valid email address
+      </small>
+    </div>
+
+    <div class="column">
+      <div class="input-box">
+        <input type="text" placeholder="username" formControlName="username" />
+        <small
+          *ngIf="
+            reactiveForm.get('username')?.invalid &&
+            reactiveForm.get('username')?.dirty
+          "
+        >
+          Username already exists
+        </small>
+        <button
+          class="btn-gen-username"
+          type="button"
+          [disabled]="
+            !reactiveForm.get('firstName').value ||
+            !reactiveForm.get('lastName').value ||
+            !reactiveForm.get('dob').value
+          "
+          (click)="generateUsername()"
+        >
+          Create a Username
+        </button>
+      </div>
+      <div class="input-box">
+        <input type="date" placeholder="Date of Birth" formControlName="dob" />
+      </div>
+    </div>
+
+    <div class="gender-box">
+      <h3>Gender</h3>
+      <div class="gender-option">
+        <div class="gender">
+          <input
+            type="radio"
+            value="male"
+            id="check-male"
+            formControlName="gender"
+          />
+          <label for="check-male">Male</label>
+        </div>
+        <div class="gender">
+          <input
+            type="radio"
+            value="female"
+            id="check-female"
+            formControlName="gender"
+          />
+          <label for="check-female">Female</label>
+        </div>
+        <div class="gender">
+          <input
+            type="radio"
+            value="other"
+            id="check-other"
+            formControlName="gender"
+          />
+          <label for="check-other">Prefer not to say</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-box address" formGroupName="address">
+      <label>Address</label>
+      <div>
+        <small
+          *ngIf="
+            reactiveForm.get('address')?.dirty &&
+            reactiveForm.get('address')?.invalid
+          "
+        >
+          Some of the address fields does not contain a valid value
+        </small>
+      </div>
+      <input
+        type="text"
+        placeholder="Street address"
+        formControlName="street"
+      />
+      <div class="column">
+        <div class="select-box">
+          <select name="country" formControlName="country">
+            <option hidden>Country</option>
+            <option>America</option>
+            <option>Japan</option>
+            <option>India</option>
+            <option>Nepal</option>
+          </select>
+        </div>
+        <input type="text" placeholder="City" formControlName="city" />
+      </div>
+      <div class="column">
+        <input type="text" placeholder="Region" formControlName="region" />
+        <input
+          type="number"
+          placeholder="Postal code"
+          formControlName="postal"
+        />
+      </div>
+    </div>
+
+    <!--HTML for Skills Form Array -->
+    <div class="input-box skills" formArrayName="skills">
+      <h4>Add Skills</h4>
+      <div
+        class="column"
+        *ngFor="
+          let control of reactiveForm.get('skills')['controls'];
+          let i = index
+        "
+      >
+        <input type="text" placeholder="Add Skill..." [formControlName]="i" />
+        <button type="button" class="btn-add-delete" (click)="deleteSkill(i)">
+          Delete
+        </button>
+      </div>
+    </div>
+    <button type="button" class="btn-add-delete" (click)="addSkill()">
+      Add Skills
+    </button>
+
+    <!--HTML for Experience Form Array -->
+    <div class="input-box" formArrayName="experience">
+      <div
+        class="experience"
+        *ngFor="
+          let exp of reactiveForm.get('experience')['controls'];
+          let i = index
+        "
+        [formGroupName]="i"
+      >
+        <label>Experience {{ i + 1 }}</label>
+        <input
+          type="text"
+          placeholder="Company Name"
+          formControlName="company"
+        />
+        <div class="column">
+          <div class="select-box">
+            <select formControlName="position">
+              <option hidden>Position</option>
+              <option>Junior Developer</option>
+              <option>Software Developer</option>
+              <option>Senior Developer</option>
+              <option>Team Lead</option>
+            </select>
+          </div>
+          <input
+            type="number"
+            placeholder="Experience"
+            formControlName="experience"
+          />
+        </div>
+        <div class="column">
+          <input type="date" placeholder="Start Date" formArrayName="from" />
+          <input type="date" placeholder="End Date" formControlName="to" />
+        </div>
+        <button
+          type="button"
+          class="btn-add-delete"
+          (click)="deleteExperience(i)"
+        >
+          Delete Experience
+        </button>
+      </div>
+    </div>
+    <button type="button" class="btn-add-delete" (click)="addExperience()">
+      Add Experience
+    </button>
+
+    <input
+      type="submit"
+      value="Submit"
+      class="submit-btn"
+      [disabled]="reactiveForm.invalid"
+    />
+  </form>
+</section>
+
+<!--uncomment below HTML for displaying form data-->
+
+<section class="user-detail-container" *ngIf="formData">
+  <div class="user-details-container">
+    <div class="user-avatar">
+      <p>
+        {{
+          formData.firstName.charAt(0).toUpperCase() +
+            formData.lastName.charAt(0).toUpperCase()
+        }}
+      </p>
+    </div>
+    <div class="user-details">
+      <div class="user-name">
+        <h2>{{ formData.firstName + " " + formData.lastName }}</h2>
+      </div>
+      <p><b>Email:</b> {{ formData.email }}</p>
+      <p><b>Username:</b> {{ formData.username }}</p>
+      <p><b>Date of birth:</b> {{ formData.dob | date : "medium" }}</p>
+      <div class="user-name">
+        <h3>Address</h3>
+      </div>
+      <span>{{ formData.address.country }}</span
+      >. <span> {{ formData.address?.city }}</span
+      >. <span> {{ formData.address?.region }}</span
+      >.
+      <span> {{ formData.address?.postal }}</span>
+    </div>
+  </div>
+</section>
