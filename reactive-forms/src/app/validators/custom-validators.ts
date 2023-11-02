@@ -1,14 +1,28 @@
-import { FormControl } from '@angular/forms';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 export class CustomValidators {
-  static noSpaceAllowed(control: FormControl) {
+  /**
+   * A custom validator that checks if the username is taken
+   * @param control {AbstractControl} The control to validate
+   * @returns  {ValidationErrors | null} A ValidationErrors object if the username is taken,
+   * or null if the username is available.
+   */
+  static noSpaceAllowed(control: AbstractControl): ValidationErrors | null {
     if (control.value != null && control.value.indexOf(' ') >= 0) {
       return { noSpaceAllowed: true };
     }
     return null;
   }
 
-  static async userNameAllowed(control: FormControl) {
+  /**
+   * A custom asynchronous validator that checks if the username is taken
+   * @param control {AbstractControl} The control to validate
+   * @returns  {Promise<ValidationErrors | null>} A promise that resolves to either
+   * a ValidationErrors object if the username is taken, or null if the username is available.
+   */
+  static async userNameAllowed(
+    control: AbstractControl
+  ): Promise<ValidationErrors | null> {
     const username = control.value;
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -20,6 +34,10 @@ export class CustomValidators {
   }
 }
 
+/**
+ * Checks if the username is taken
+ * @param username {string} The username to check
+ */
 function userNameAllowed(username: string) {
   const takenUsernames = ['admin', 'superuser', 'administrator'];
   return takenUsernames.includes(username);

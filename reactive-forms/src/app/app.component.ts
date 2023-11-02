@@ -11,11 +11,16 @@ import { Subscription } from 'rxjs';
 export class AppComponent implements OnInit, OnDestroy {
   title = 'reactive-forms';
   reactiveForm!: FormGroup;
-  firstNameValueChanges!: Subscription;
+  firstNameValueChanges?: Subscription;
   formStatusChanges!: Subscription;
   formStatus?: 'VALID' | 'INVALID' | 'PENDING' | 'DISABLED';
   formData?: any;
 
+  /**
+   * Additional initialization logic.
+   * Initializes the reactive form and subscribes to
+   * the first name value changes and form status changes.
+   */
   ngOnInit() {
     this.reactiveForm = new FormGroup({
       firstName: new FormControl(null, [
@@ -44,7 +49,6 @@ export class AppComponent implements OnInit, OnDestroy {
       skills: new FormArray([new FormControl(null, Validators.required)]),
       experience: new FormArray([]),
     });
-
     this.firstNameValueChanges = this.reactiveForm
       .get('firstName')
       ?.valueChanges.subscribe((value) => {
@@ -59,30 +63,28 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Cleans up before the component is destroyed.
+   * Unsubscribes from the first name value changes and form status changes.
+   */
   ngOnDestroy() {
-    this.firstNameValueChanges.unsubscribe();
+    this.firstNameValueChanges?.unsubscribe();
     this.formStatusChanges.unsubscribe();
   }
 
+  /**
+   * Generates a username based on the first name, last name, and date of birth.
+   */
   generateUsername() {
     let username = '';
-    let firstName = this.reactiveForm.value.firstName;
-    let lastName = this.reactiveForm.value.lastName;
+    const firstName = this.reactiveForm.value.firstName;
+    const lastName = this.reactiveForm.value.lastName;
+    const datetime = new Date(this.reactiveForm.value.dob);
 
-    if (firstName.length >= 3) {
-      username += firstName.slice(0, 3);
-    } else {
-      username += firstName;
-    }
+    username += firstName.length >= 3 ? firstName.slice(0, 3) : firstName;
+    username += lastName.length >= 3 ? lastName.slice(0, 3) : lastName;
 
-    if (lastName.length >= 3) {
-      username += lastName.slice(0, 3);
-    } else {
-      username += lastName;
-    }
-    let datetime = new Date(this.reactiveForm.value.dob);
     username += datetime.getFullYear();
-
     username = username.toLowerCase();
 
     // this.reactiveForm.patchValue({ username: username });
@@ -94,6 +96,9 @@ export class AppComponent implements OnInit, OnDestroy {
     (<FormArray>this.reactiveForm.get('skills')).push(control);
   }
 
+  /**
+   * Adds an experience form group to the experience form array.
+   */
   addExperience() {
     const experienceFromGroup = new FormGroup({
       company: new FormControl(null, Validators.required),
@@ -105,6 +110,17 @@ export class AppComponent implements OnInit, OnDestroy {
     (<FormArray>this.reactiveForm.get('experience')).push(experienceFromGroup);
   }
 
+  /**
+   * Returns the experience form array controls.
+   */
+  get experience() {
+    return (<FormArray>this.reactiveForm.get('experience')).controls;
+  }
+
+  /**
+   * Deletes an experience form group from the experience form array.
+   * @param index {number} The index of the experience form group to delete.
+   */
   deleteExperience(index: number) {
     const experienceControls = <FormArray<FormGroup>>(
       this.reactiveForm.get('experience')
@@ -112,6 +128,17 @@ export class AppComponent implements OnInit, OnDestroy {
     experienceControls.removeAt(index);
   }
 
+  /**
+   * Returns the skills form array controls.
+   */
+  get skills() {
+    return (<FormArray>this.reactiveForm.get('skills')).controls;
+  }
+
+  /***
+   * Deletes a skill form control from the skills form array.
+   * @param index {number} The index of the skill form control to delete.
+   */
   deleteSkill(index: number) {
     const skillsControls = <FormArray<FormControl>>(
       this.reactiveForm.get('skills')
@@ -119,6 +146,9 @@ export class AppComponent implements OnInit, OnDestroy {
     if (skillsControls.length > 1) skillsControls.removeAt(index);
   }
 
+  /**
+   * Submits the form data and resets the form.
+   */
   onFormSubmitted() {
     console.log(this.reactiveForm.value);
     this.formData = this.reactiveForm.value;
