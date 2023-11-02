@@ -83,7 +83,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
     username += firstName.length >= 3 ? firstName.slice(0, 3) : firstName;
     username += lastName.length >= 3 ? lastName.slice(0, 3) : lastName;
-
     username += datetime.getFullYear();
     username = username.toLowerCase();
 
