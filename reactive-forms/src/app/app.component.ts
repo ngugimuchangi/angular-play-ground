@@ -77,7 +77,7 @@ export class AppComponent implements OnInit, OnDestroy {
    */
   generateUsername() {
     let username = '';
-    const firstName = this.reactiveForm.value.firstName;
+    const firstName: string = this.reactiveForm.value.firstName;
     const lastName: string = this.reactiveForm.value.lastName;
     const datetime = new Date(this.reactiveForm.value.dob);
 
