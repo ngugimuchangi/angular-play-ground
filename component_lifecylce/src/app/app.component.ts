@@ -13,7 +13,8 @@
  * `ngAfterContentInit` hooks of the parent component
  */
 
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { DemoComponent } from './demo/demo.component';
 
 @Component({
   selector: 'app-root',
@@ -24,10 +25,16 @@ export class AppComponent {
   title = 'component lifecycle';
   inputVal: string = 'Initial val';
   toDestroy: boolean = false;
+  @ViewChild('demo', {
+    static: false,
+  })
+  demoComponent?: DemoComponent;
 
-  constructor() {
-    console.log('%cAppComponent constructor', 'color: salmon');
-  }
+  @ViewChild(DemoComponent, {
+    read: ElementRef,
+    static: false,
+  })
+  demoComponentEl?: ElementRef;
 
   ngOnInit(): void {
     console.log('%cAppComponent ngOnInit', 'color: salmon');
@@ -48,10 +55,25 @@ export class AppComponent {
 
   ngAfterViewInit(): void {
     console.log('%cAppComponent ngAfterViewInit', 'color: salmon');
+    console.log(
+      '%cLogging type of demo component. this.demoComponent is instance of DemoComponent? %s',
+      'color: salmon',
+      this.demoComponent instanceof DemoComponent
+    );
   }
 
   ngAfterViewChecked(): void {
     console.log('%cAppComponent ngAfterViewChecked', 'color: salmon');
+    console.log(
+      '%cDemo component message value: %s',
+      'color: salmon',
+      this.demoComponent?.message
+    );
+    console.log(
+      '%cDemoComponent native element: %o',
+      'color: salmon',
+      this.demoComponentEl?.nativeElement
+    );
   }
 
   onClick(inputEl: HTMLInputElement) {

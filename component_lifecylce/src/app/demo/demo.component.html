@@ -1,4 +1,8 @@
+<ng-content></ng-content>
 <div class="demo">
   <p #messageParagraph>Message: {{ message }}</p>
 </div>
-<ng-content></ng-content>
+<ng-content select="[para]"></ng-content>
+<!-- Conditional projection rendering -->
+<ng-container [ngTemplateOutlet]="projectedTemplate" *ngIf="false">
+</ng-container>

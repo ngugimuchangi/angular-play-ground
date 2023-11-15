@@ -12,6 +12,7 @@ import {
   OnDestroy,
   OnInit,
   SimpleChanges,
+  TemplateRef,
   ViewChild,
 } from '@angular/core';
 
@@ -43,6 +44,9 @@ export class DemoComponent
   @ContentChild('projectedParagraph')
   projectedParagraph!: ElementRef<HTMLParagraphElement>;
 
+  @ContentChild('projectedTemplate')
+  projectedTemplate!: TemplateRef<any>;
+
   constructor() {
     console.log('%cDemoComponent constructor', OUTPUT_CLR);
     console.log('%cmessage: %s', OUTPUT_CLR, this.message);
@@ -57,7 +61,7 @@ export class DemoComponent
     console.log('%cDemoComponent ngOnChanges', OUTPUT_CLR);
     console.log('%cSimplechanges: %o', OUTPUT_CLR, changes);
     console.log('%cmessage: %s', OUTPUT_CLR, this.message);
-    this.message = 'Hello from DemoComponent';
+    this.message += ' from DemoComponent';
     if (this.oldMessage !== this.message) {
       console.log('%cMessage changed', OUTPUT_CLR);
       console.log('%cOld message: %s', OUTPUT_CLR, this.oldMessage);

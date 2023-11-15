@@ -1,9 +1,16 @@
 <div class="container">
   <input type="text" #inputEl />
   <button (click)="onClick(inputEl)">Submit</button>
-  <app-demo [message]="inputVal" *ngIf="!toDestroy">
-    <p #projectedParagraph>Projected content: {{ inputVal }}</p>
+  <app-demo [message]="inputVal" *ngIf="!toDestroy" #demo>
+    <p para #projectedParagraph>Projected content: {{ inputVal }}</p>
+    <!--Not rendered since it lack attribute-->
+    <div>Another one</div>
+    <!-- <p ngProjectAs="[para]">Another Project</p> -->
+    <ng-template #projectedTemplate>
+      <p>Project template</p>
+    </ng-template>
   </app-demo>
+
   <br />
   <br />
   <button (click)="destroyComponent()">Show / Hide</button>
