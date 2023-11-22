@@ -7,6 +7,7 @@ import { MyNgStyleDirective } from './directives/my-ng-style.directive';
 import { MyNgIfDirective } from './directives/my-ng-if.directive';
 import { TermsAndConditionsComponent } from './components/terms-and-conditions/terms-and-conditions.component';
 import { NgSwitchExampleComponent } from './components/ng-switch-example/ng-switch-example.component';
+import { MyNgForDirective } from './directives/my-ng-for.directive';
 
 @NgModule({
   declarations: [
@@ -15,12 +16,11 @@ import { NgSwitchExampleComponent } from './components/ng-switch-example/ng-swit
     MyNgStyleDirective,
     MyNgIfDirective,
     TermsAndConditionsComponent,
-    NgSwitchExampleComponent
+    NgSwitchExampleComponent,
+    MyNgForDirective,
   ],
-  imports: [
-    BrowserModule
-  ],
+  imports: [BrowserModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

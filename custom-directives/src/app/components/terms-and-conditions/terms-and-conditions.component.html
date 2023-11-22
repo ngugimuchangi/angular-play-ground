@@ -10,7 +10,7 @@
     behind the scenes when it sees an asterisk in front of ngIf or
     ngFor
   -->
-  <div class="notice-body" *myNgIf="display">
+  <div class="notice-body" *myNgIf="display; else altNoticeText">
     <!-- <ng-template [ngIf]="display" [ngIfElse]="altNoticeText"> -->
     <h1>Terms of service and Privacy Policy</h1>
     <p>
@@ -39,6 +39,8 @@
   </div>
   <ng-template #altNoticeText>
     <p>
+      Alternative notice text.
+      <br />
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur ad
       totam veritatis quia vel, repellat nulla incidunt quas maxime sit.
     </p>
