@@ -1,5 +1,6 @@
 import {
   Directive,
+  DoCheck,
   Input,
   NgIterable,
   TemplateRef,
@@ -8,13 +9,8 @@ import {
 } from '@angular/core';
 
 /** Context object class definition */
-class MyNgForContext {
-  constructor(
-    public $implicit: any,
-    public index: number,
-    public count: number
-  ) {}
-
+class MyNgForContext<T, U extends NgIterable<T>> {
+  constructor(public $implicit: T, public ngForOf: U, public index: number, public count: number) { }
   get first(): boolean {
     return this.index === 0;
   }
@@ -34,12 +30,12 @@ class MyNgForContext {
 @Directive({
   selector: '[myNgFor][myNgForOf]',
 })
-export class MyNgForDirective<T, U extends NgIterable<T>> {
+export class MyNgForDirective<T, U extends NgIterable<T> = NgIterable<T>> implements DoCheck {
   /**
    * @description
    * Iterable to loop over
    */
-  @Input({ alias: 'myNgForOf', required: true }) myNgForOf!: U;
+  @Input({ required: true }) myNgForOf!: U;
 
   /**
    * @description
@@ -48,11 +44,28 @@ export class MyNgForDirective<T, U extends NgIterable<T>> {
    * @param item - item from the iterable
    * @returns
    */
-  @Input('myNgForTrackBy')
+  @Input()
   myNgForTrackBy: TrackByFunction<T> = (index: number, item: T) => item;
 
-  constructor(
-    private viewContainerRef: ViewContainerRef,
-    template: TemplateRef<MyNgForContext>
-  ) {}
+  @Input()
+  set myNgForTemplate(value: TemplateRef<MyNgForContext<T, U>>) {
+    if (value) {
+      this.template = value;
+    }
+  }
+
+  get myNgForTemplate(): TemplateRef<MyNgForContext<T, U>> {
+    return this.template;
+  }
+
+  constructor(private viewContainerRef: ViewContainerRef, private template: TemplateRef<MyNgForContext<T, U>>) { }
+
+  ngDoCheck(): void {
+    this.viewContainerRef.clear();
+    let index = 0;
+    for (const item of this.myNgForOf) {
+      const context = new MyNgForContext<T, U>(item, this.myNgForOf, index, ++index);
+      this.viewContainerRef.createEmbeddedView(this.myNgForTemplate, context);
+    }
+  }
 }
