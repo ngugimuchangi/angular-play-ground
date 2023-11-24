@@ -159,7 +159,7 @@
           </button>
         </td>
         <td *ngIf="!isEditing || std.id !== stdIdToEdit">
-          <button class="delete-button">
+          <button class="delete-button" (click)="OnDeleteStudent(std.id)">
             <i class="fa fa-trash" aria-hidden="true"></i>
           </button>
         </td>

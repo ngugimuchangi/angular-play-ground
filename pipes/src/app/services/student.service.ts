@@ -78,4 +78,8 @@ export class StudentService {
       (student) => student.gender === filter || filter === 'All'
     );
   }
+
+  deleteStudent(stdId: number) {
+    this.students = this.students.filter((student) => student.id !== stdId);
+  }
 }

@@ -94,4 +94,9 @@ export class AdminComponent implements OnInit {
 
     this.isEditing = false;
   }
+
+  OnDeleteStudent(stdId: number) {
+    this.studentService.deleteStudent(stdId);
+    this.students = this.studentService.filterStudentsByGender(this.filterText);
+  }
 }
