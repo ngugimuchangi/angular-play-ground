@@ -21,16 +21,16 @@ export class UsersComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService,
     private componentFactoryResolver: ComponentFactoryResolver
-  ) {}
+  ) { }
 
   users: User[] = [];
   userToDelete!: User;
 
   showConfirmDeleteModal: boolean = false;
 
-  @ViewChild(viewContainerDirective) container!: viewContainerDirective;
-
   userDeletionConfirmationSubscription: Subscription | undefined;
+
+  @ViewChild(viewContainerDirective) container!: viewContainerDirective;
 
   ngOnInit() {
     this.users = this.userService.users;
@@ -62,7 +62,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       confirmDeleteComponentFactory
     );
 
-    confirmDeleteComponentRef.instance.userToDelete = user;
+    confirmDeleteComponentRef.setInput('userToDelete', user);
 
     this.userDeletionConfirmationSubscription =
       confirmDeleteComponentRef.instance.userDeletionConfirmation.subscribe(
