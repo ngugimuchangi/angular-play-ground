@@ -20,4 +20,4 @@ import { viewContainerDirective } from './directives/view-container.directive';
   bootstrap: [AppComponent],
   // entryComponents: [ConfirmDeleteComponent], // for Angular 8 and below
 })
-export class AppModule {}
+export class AppModule { }
