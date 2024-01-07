@@ -8,10 +8,10 @@
   <!--
     ngIf implementation - angular creates a similar template
     behind the scenes when it sees an asterisk in front of ngIf or
-    ngFor
+    ngFor.
   -->
+  <!-- <ng-template [ngIf]="display" [ngIfElse]="altNoticeText"> -->
   <div class="notice-body" *myNgIf="display; else altNoticeText">
-    <!-- <ng-template [ngIf]="display" [ngIfElse]="altNoticeText"> -->
     <h1>Terms of service and Privacy Policy</h1>
     <p>
       Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum quae porro
@@ -35,8 +35,8 @@
       consequuntur exercitationem incidunt omnis dolorum quaerat rem quos
       consectetur sapiente corrupti modi temporibus.
     </p>
-    <!-- </ng-template> -->
   </div>
+  <!-- </ng-template> -->
   <ng-template #altNoticeText>
     <p>
       Alternative notice text.
