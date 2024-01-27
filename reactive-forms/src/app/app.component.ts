@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormControlStatus, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from './validators/custom-validators';
 import { Subscription } from 'rxjs';
 
@@ -13,7 +13,7 @@ export class AppComponent implements OnInit, OnDestroy {
   reactiveForm!: FormGroup;
   firstNameValueChanges?: Subscription;
   formStatusChanges!: Subscription;
-  formStatus?: 'VALID' | 'INVALID' | 'PENDING' | 'DISABLED';
+  formStatus?: FormControlStatus;
   formData?: any;
 
   /**
